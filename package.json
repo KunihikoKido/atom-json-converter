@@ -1,0 +1,32 @@
+{
+  "name": "json-converter",
+  "main": "./lib/json-converter",
+  "version": "0.0.0",
+  "description": "Convert csv to json, json to csv, and more.",
+  "keywords": [
+    "csv", "json", "yaml", "elasticsearch", "converter"
+  ],
+  "activationCommands": {
+    "atom-workspace": [
+      "json-converter:csv-2-elasticsearch-bulk-create",
+      "json-converter:csv-2-elasticsearch-bulk-delete",
+      "json-converter:csv-2-elasticsearch-bulk-index",
+      "json-converter:csv-2-elasticsearch-bulk-update",
+
+      "json-converter:csv-2-json",
+      "json-converter:json-2-csv",
+      "json-converter:json-2-yaml",
+      "json-converter:yaml-2-json"
+    ]
+  },
+  "repository": "https://github.com/KunihikoKido/atom-json-converter",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "json-2-csv": "^1.3.0",
+    "flat": "^1.6.0",
+    "js-yaml": "^3.3.1"
+  }
+}
