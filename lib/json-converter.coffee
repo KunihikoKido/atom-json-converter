@@ -1,6 +1,5 @@
 YAML = require 'js-yaml'
 converter = require('json-2-csv')
-flatten = require('flat')
 {CompositeDisposable} = require 'atom'
 
 unique = (array) ->
