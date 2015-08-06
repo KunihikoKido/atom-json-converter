@@ -54,15 +54,15 @@ module.exports = JsonConverter =
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-2-elasticsearch-bulk-create': => @csvToEsBulk(action: 'create')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-2-elasticsearch-bulk-delete': => @csvToEsBulk(action: 'delete')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-2-elasticsearch-bulk-index': => @csvToEsBulk(action: 'index')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-2-elasticsearch-bulk-update': => @csvToEsBulk(action: 'update')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-create-format': => @csvToEsBulk(action: 'create')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-delete-format': => @csvToEsBulk(action: 'delete')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-index-format': => @csvToEsBulk(action: 'index')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-update-format': => @csvToEsBulk(action: 'update')
 
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-2-json': => @csvToJson()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-2-csv': => @jsonToCsv()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-2-yaml': => @jsonToYaml()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:yaml-2-json': => @yamlToJson()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-json': => @csvToJson()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-csv': => @jsonToCsv()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-yaml': => @jsonToYaml()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:yaml-to-json': => @yamlToJson()
 
   deactivate: ->
     @subscriptions.dispose()

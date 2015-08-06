@@ -12,14 +12,14 @@
   ],
   "activationCommands": {
     "atom-workspace": [
-      "json-converter:csv-2-elasticsearch-bulk-create",
-      "json-converter:csv-2-elasticsearch-bulk-delete",
-      "json-converter:csv-2-elasticsearch-bulk-index",
-      "json-converter:csv-2-elasticsearch-bulk-update",
-      "json-converter:csv-2-json",
-      "json-converter:json-2-csv",
-      "json-converter:json-2-yaml",
-      "json-converter:yaml-2-json"
+      "json-converter:csv-to-elasticsearch-bulk-create-format",
+      "json-converter:csv-to-elasticsearch-bulk-delete-format",
+      "json-converter:csv-to-elasticsearch-bulk-index-format",
+      "json-converter:csv-to-elasticsearch-bulk-update-format",
+      "json-converter:csv-to-json",
+      "json-converter:json-to-csv",
+      "json-converter:json-to-yaml",
+      "json-converter:yaml-to-json"
     ]
   },
   "repository": "https://github.com/KunihikoKido/atom-json-converter",

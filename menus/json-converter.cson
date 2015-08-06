@@ -3,39 +3,39 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'JSON Converter'
+      'label': 'Json Converter'
       'submenu': [
         {
-          'label': 'Csv 2 Json'
-          'command': 'json-converter:csv-2-json'
+          'label': 'Csv to JSON'
+          'command': 'json-converter:csv-to-json'
         }
         {
-          'label': 'Json 2 Csv'
-          'command': 'json-converter:json-2-csv'
+          'label': 'Json to Csv'
+          'command': 'json-converter:json-to-csv'
         }
         {
-          'label': 'Yaml 2 Json'
-          'command': 'json-converter:yaml-2-json'
+          'label': 'Yaml to Json'
+          'command': 'json-converter:yaml-to-json'
         }
         {
-          'label': 'Json 2 Yaml'
-          'command': 'json-converter:json-2-yaml'
+          'label': 'Json to Yaml'
+          'command': 'json-converter:json-to-yaml'
         }
         {
-          'label': 'Csv 2 Elasticsearch Bulk Index'
-          'command': 'json-converter:csv-2-elasticsearch-bulk-index'
+          'label': 'Csv to Elasticsearch bulk Index format'
+          'command': 'json-converter:csv-to-elasticsearch-bulk-index-format'
         }
         {
-          'label': 'Csv 2 Elasticsearch Bulk Create'
-          'command': 'json-converter:csv-2-elasticsearch-bulk-create'
+          'label': 'Csv to Elasticsearch bulk Create'
+          'command': 'json-converter:csv-to-elasticsearch-bulk-create-format'
         }
         {
-          'label': 'Csv 2 Elasticsearch Bulk Delete'
-          'command': 'json-converter:csv-2-elasticsearch-bulk-delete'
+          'label': 'Csv to Elasticsearch bulk Delete format'
+          'command': 'json-converter:csv-to-elasticsearch-bulk-delete-format'
         }
         {
-          'label': 'Csv 2 Elasticsearch Bulk Update'
-          'command': 'json-converter:csv-2-elasticsearch-bulk-update'
+          'label': 'Csv to Elasticsearch bulk Update format'
+          'command': 'json-converter:csv-to-elasticsearch-bulk-update-format'
         }
       ]
     ]

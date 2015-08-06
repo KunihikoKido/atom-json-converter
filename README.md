@@ -5,14 +5,14 @@ Convert csv to json, json to csv, and more.
 ![overview](https://raw.githubusercontent.com/KunihikoKido/atom-json-converter/master/screenshots/overview.gif)
 
 ## Commands
-* Json Converter: Csv 2 Json
-* Json Converter: Json 2 Csv
-* Json Converter: Json 2 Yaml
-* Json Converter: Yaml 2 Json
-* Json Converter: Csv 2 Elasticsearch Bulk Create
-* Json Converter: Csv 2 Elasticsearch Bulk Delete
-* Json Converter: Csv 2 Elasticsearch Bulk Index
-* Json Converter: Csv 2 Elasticsearch Bulk Update
+* Json Converter: Csv To Json
+* Json Converter: Json To Csv
+* Json Converter: Json To Yaml
+* Json Converter: Yaml To Json
+* Json Converter: Csv To Elasticsearch Bulk Create Format
+* Json Converter: Csv To Elasticsearch Bulk Delete Format
+* Json Converter: Csv To Elasticsearch Bulk Index Format
+* Json Converter: Csv To Elasticsearch Bulk Update Format
 
 ## Settings
 
