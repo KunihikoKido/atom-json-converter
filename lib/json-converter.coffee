@@ -109,7 +109,6 @@ module.exports = JsonConverter =
         FIELD: atom.config.get('json-converter.csvDelimiterField')
         ARRAY: atom.config.get('json-converter.csvDelimiterArray')
         WRAP: atom.config.get('json-converter.csvDelimiterWrap')
-      KEYS: unique(key.replace(/^\d+\./, '') for key in Object.keys(flatten(json)))
 
     converter.json2csv(json, (error, csv) ->
       if not error
