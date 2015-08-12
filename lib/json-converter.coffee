@@ -200,6 +200,8 @@ module.exports = JsonConverter =
 
               doc = {"doc": doc} if action is 'update'
               newEditor.insertText(JSON.stringify(doc) + '\r\n')
+
+          newEditor.setCursorScreenPosition([0, 0])
         )
       else
         atom.notifications?.addError('csvToJson: CSV convert error',
