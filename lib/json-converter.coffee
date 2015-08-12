@@ -34,22 +34,26 @@ module.exports = JsonConverter =
       title: 'CSV Wrap Values in Quotes'
       type: 'string'
       default: '"'
-    esMetaIndex:
+    elasticIndex:
       title: 'Elasticsearch Index Name'
       type: 'string'
-      default: ''
-    esMetaType:
+      default: 'blog'
+    elasticDocType:
       title: 'Elasticsearch Type Name'
       type: 'string'
-      default: ''
-    esMetaId:
+      default: 'posts'
+    elasticUidField:
       title: 'Elasticsearch Stored UID Field Name in CSV'
       type: 'string'
-      default: ''
-    esMetaParentId:
+      default: 'id'
+    elasticParentUidField:
       title: 'Elasticsearch Stored Parent UID Field Name in CSV'
       type: 'string'
-      default: ''
+      default: 'parent'
+    elasticExcludeFields:
+      title: 'Elasticsearch Exclude fields in CSV'
+      type: 'array'
+      default: []
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
@@ -172,10 +176,11 @@ module.exports = JsonConverter =
         atom.workspace.open('').done((newEditor) ->
           newEditor.setGrammar(atom.grammars.selectGrammar('untitled.json'))
 
-          metaIndex = atom.config.get('json-converter.esMetaIndex')
-          metaType = atom.config.get('json-converter.esMetaType')
-          metaId = atom.config.get('json-converter.esMetaId')
-          metaParentId = atom.config.get('json-converter.esMetaParentId')
+          metaIndex = atom.config.get('json-converter.elasticIndex')
+          metaType = atom.config.get('json-converter.elasticDocType')
+          metaId = atom.config.get('json-converter.elasticUidField')
+          metaParentId = atom.config.get('json-converter.elasticParentUidField')
+          excludeFields = atom.config.get('json-converter.elasticExcludeFields')
 
           for doc in docs
             docKeys = Object.keys(doc)
@@ -190,6 +195,9 @@ module.exports = JsonConverter =
             newEditor.insertText(JSON.stringify(meta) + '\r\n')
 
             if action in ['index', 'create', 'update']
+              for field, value of doc
+                delete doc[field] if field in excludeFields
+
               doc = {"doc": doc} if action is 'update'
               newEditor.insertText(JSON.stringify(doc) + '\r\n')
         )
