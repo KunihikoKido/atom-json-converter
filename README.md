@@ -28,7 +28,8 @@ Convert csv to json, json to csv, and more.
 * YAML Indent (default: 2)
 
 ### for Elasticsearch
-* Elasticsearch Index Name (default: '')
-* Elasticsearch Type Name (default: '')
-* Elasticsearch Stored UID Field Name in CSV (default: '')
-* Elasticsearch Stored Parent UID Field Name in CSV (default: '')
+* Elasticsearch Index Name (default: 'blog')
+* Elasticsearch Type Name (default: 'posts')
+* Elasticsearch Stored UID Field Name in CSV (default: 'id')
+* Elasticsearch Stored Parent UID Field Name in CSV (default: 'parent')
+* Elasticsearch Exclude fields in CSV. (default: [])
