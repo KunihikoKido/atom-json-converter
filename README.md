@@ -13,6 +13,10 @@ Convert csv to json, json to csv, and more.
 * Json Converter: Csv To Elasticsearch Bulk Delete Format
 * Json Converter: Csv To Elasticsearch Bulk Index Format
 * Json Converter: Csv To Elasticsearch Bulk Update Format
+* Json Converter: Json To Elasticsearch Bulk Create Format
+* Json Converter: Json To Elasticsearch Bulk Delete Format
+* Json Converter: Json To Elasticsearch Bulk Index Format
+* Json Converter: Json To Elasticsearch Bulk Update Format
 
 ## Settings
 

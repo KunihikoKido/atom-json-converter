@@ -10,6 +10,38 @@ unique = (array) ->
 isEven = (val) ->
   return val % 2 == 0
 
+expandAction = (docs, opType='index') ->
+  metaIndex = atom.config.get('json-converter.elasticIndex')
+  metaType = atom.config.get('json-converter.elasticDocType')
+  metaId = atom.config.get('json-converter.elasticUidField')
+  metaParentId = atom.config.get('json-converter.elasticParentUidField')
+  excludeFields = atom.config.get('json-converter.elasticExcludeFields')
+
+  actions = []
+  for doc in docs
+    docKeys = Object.keys(doc)
+
+    action = {}
+    action[opType] = {}
+    action[opType]._index = metaIndex if metaIndex
+    action[opType]._type = metaType if metaType
+    action[opType]._id = doc[metaId] if metaId in docKeys
+    action[opType]._parent = doc[metaParentId] if metaParentId in docKeys
+
+    if opType is 'delete'
+      actions.push(JSON.stringify(action))
+    else
+      for field, value of doc
+        delete doc[field] if field in excludeFields
+      doc = {"doc": doc} if opType is 'update'
+      actions.push(JSON.stringify(action))
+      actions.push(JSON.stringify(doc))
+
+  return actions
+
+
+
+
 module.exports = JsonConverter =
   subscriptions: null
 
@@ -57,11 +89,14 @@ module.exports = JsonConverter =
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-create-format': => @csvToEsBulk(action: 'create')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-delete-format': => @csvToEsBulk(action: 'delete')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-index-format': => @csvToEsBulk(action: 'index')
-    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-update-format': => @csvToEsBulk(action: 'update')
-
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-create-format': => @csvToElasticsearchBulkFormat(opType: 'create')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-delete-format': => @csvToElasticsearchBulkFormat(opType: 'delete')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-index-format': => @csvToElasticsearchBulkFormat(opType: 'index')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-elasticsearch-bulk-update-format': => @csvToElasticsearchBulkFormat(opType: 'update')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-elasticsearch-bulk-create-format': => @jsonToElasticsearchBulkFormat(opType: 'create')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-elasticsearch-bulk-delete-format': => @jsonToElasticsearchBulkFormat(opType: 'delete')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-elasticsearch-bulk-index-format': => @jsonToElasticsearchBulkFormat(opType: 'index')
+    @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-elasticsearch-bulk-update-format': => @jsonToElasticsearchBulkFormat(opType: 'update')
     @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:csv-to-json': => @csvToJson()
     @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-csv': => @jsonToCsv()
     @subscriptions.add atom.commands.add 'atom-workspace', 'json-converter:json-to-yaml': => @jsonToYaml()
@@ -159,7 +194,7 @@ module.exports = JsonConverter =
       newEditor.setText(text)
     )
 
-  csvToEsBulk: ({action}={action: 'index'})->
+  csvToElasticsearchBulkFormat: ({opType}={opType: 'index'})->
     editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
@@ -175,35 +210,33 @@ module.exports = JsonConverter =
       if not error
         atom.workspace.open('').done((newEditor) ->
           newEditor.setGrammar(atom.grammars.selectGrammar('untitled.json'))
-
-          metaIndex = atom.config.get('json-converter.elasticIndex')
-          metaType = atom.config.get('json-converter.elasticDocType')
-          metaId = atom.config.get('json-converter.elasticUidField')
-          metaParentId = atom.config.get('json-converter.elasticParentUidField')
-          excludeFields = atom.config.get('json-converter.elasticExcludeFields')
-
-          for doc in docs
-            docKeys = Object.keys(doc)
-
-            meta = {}
-            meta[action] = {}
-            meta[action]._index = metaIndex if metaIndex
-            meta[action]._type = metaType if metaType
-            meta[action]._id = doc[metaId] if metaId in docKeys
-            meta[action]._parent = doc[metaParentId] if metaParentId in docKeys
-
-            newEditor.insertText(JSON.stringify(meta) + '\r\n')
-
-            if action in ['index', 'create', 'update']
-              for field, value of doc
-                delete doc[field] if field in excludeFields
-
-              doc = {"doc": doc} if action is 'update'
-              newEditor.insertText(JSON.stringify(doc) + '\r\n')
-
+          text = expandAction(docs, opType).join('\r\n')
+          newEditor.setText(text)
           newEditor.setCursorScreenPosition([0, 0])
         )
       else
-        atom.notifications?.addError('csvToJson: CSV convert error',
+        atom.notifications?.addError(
+          'csvToElasticsearchBulkFormat: CSV convert error',
           dismissable: true, detail: error)
     , options)
+
+  jsonToElasticsearchBulkFormat: ({opType}={opType: 'index'})->
+    editor = atom.workspace.getActiveTextEditor()
+    return unless editor?
+
+    try
+      json = JSON.parse(editor.getText())
+    catch error
+      atom.notifications?.addError(
+        'jsonToElasticsearchBulkFormat: JSON parse error',
+        dismissable: true, detail: error.toString())
+      return
+
+    docs = if json instanceof Array then json else [json]
+
+    atom.workspace.open('').done((newEditor) ->
+      newEditor.setGrammar(atom.grammars.selectGrammar('untitled.json'))
+      text = expandAction(docs, opType).join('\r\n')
+      newEditor.setText(text)
+      newEditor.setCursorScreenPosition([0, 0])
+    )
