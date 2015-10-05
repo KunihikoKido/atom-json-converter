@@ -112,12 +112,14 @@ module.exports = JsonConverter =
     return unless editor?
 
     csv = editor.getText()
+    return unless csv.length
 
     options =
       DELIMITER:
         FIELD: atom.config.get('json-converter.csvDelimiterField')
         ARRAY: atom.config.get('json-converter.csvDelimiterArray')
         WRAP: atom.config.get('json-converter.csvDelimiterWrap')
+      EOL: editor.getBuffer().lineEndingForRow(0)
 
     converter.csv2json(csv, (error, json) ->
       if not error
