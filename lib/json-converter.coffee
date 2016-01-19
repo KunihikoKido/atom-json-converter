@@ -116,7 +116,7 @@ module.exports = JsonConverter =
 
     options =
       DELIMITER:
-        FIELD: atom.config.get('json-converter.csvDelimiterField')
+        FIELD: atom.config.get('json-converter.csvDelimiterField').replace('\\t', '\t')
         ARRAY: atom.config.get('json-converter.csvDelimiterArray')
         WRAP: atom.config.get('json-converter.csvDelimiterWrap')
       EOL: editor.getBuffer().lineEndingForRow(0)
@@ -146,7 +146,7 @@ module.exports = JsonConverter =
 
     options =
       DELIMITER:
-        FIELD: atom.config.get('json-converter.csvDelimiterField')
+        FIELD: atom.config.get('json-converter.csvDelimiterField').replace('\\t', '\t')
         ARRAY: atom.config.get('json-converter.csvDelimiterArray')
         WRAP: atom.config.get('json-converter.csvDelimiterWrap')
 
@@ -204,7 +204,7 @@ module.exports = JsonConverter =
 
     options =
       DELIMITER:
-        FIELD: atom.config.get('json-converter.csvDelimiterField')
+        FIELD: atom.config.get('json-converter.csvDelimiterField').replace('\\t', '\t')
         ARRAY: atom.config.get('json-converter.csvDelimiterArray')
         WRAP: atom.config.get('json-converter.csvDelimiterWrap')
 
