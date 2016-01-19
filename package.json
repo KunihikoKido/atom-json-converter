@@ -1,7 +1,7 @@
 {
   "name": "json-converter",
   "main": "./lib/json-converter",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Convert csv to json, json to csv, and more.",
   "keywords": [
     "csv",
