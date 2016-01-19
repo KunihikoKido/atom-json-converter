@@ -65,7 +65,7 @@ module.exports = JsonConverter =
     csvDelimiterWrap:
       title: 'CSV Wrap Values in Quotes'
       type: 'string'
-      default: '"'
+      default: ''
     elasticIndex:
       title: 'Elasticsearch Index Name'
       type: 'string'
